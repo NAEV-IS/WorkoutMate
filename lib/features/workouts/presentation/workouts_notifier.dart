@@ -39,13 +39,20 @@ class WorkoutNotifier extends StateNotifier<WorkoutState> {
 
   Future<void> loadUserWorkouts(String userId) async {
     state = const WorkoutLoading();
-
-    final result = await _getUserWorkoutsUseCase(userId);
-
-    result.fold(
-          (failure) => state = WorkoutError(failure.message),
-          (workouts) => state = WorkoutsLoaded(workouts),
-    );
+    // MOCK DATA TO PREVENT CONNECTION ERRORS
+    final mockWorkouts = [
+      Workout(
+        id: '1',
+        userId: userId,
+        name: 'Rutina de Pecho mockeada',
+        category: WorkoutCategory.STRENGTH,
+        exercises: [],
+        isPublic: false,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      ),
+    ];
+    state = WorkoutsLoaded(mockWorkouts);
   }
 
   Future<void> createWorkout({
@@ -170,16 +177,8 @@ class WorkoutNotifier extends StateNotifier<WorkoutState> {
 
     state = const WorkoutLoading();
 
-    final result = await _getPredefinedExercisesUseCase(
-      muscleGroup: muscleGroup,
-      difficulty: difficulty,
-      equipment: equipment,
-    );
-
-    result.fold(
-          (failure) => state = WorkoutError(failure.message),
-          (exercises) => state = PredefinedExercisesLoaded(exercises),
-    );
+    // MOCK EXERCISES
+    state = PredefinedExercisesLoaded([]);
   }
 
   void restorePreviousWorkoutsState() {

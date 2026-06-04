@@ -5,6 +5,7 @@ import '../domain/usecases/get_current_user_usecase.dart';
 import '../domain/usecases/login_usecase.dart';
 import '../domain/usecases/logout_usecase.dart';
 import '../domain/usecases/register_usecase.dart';
+import '../domain/entities/user.dart';
 import 'auth_state.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
@@ -25,37 +26,25 @@ class AuthNotifier extends StateNotifier<AuthState> {
        super(const AuthInitial());
 
   Future<void> checkAuthStatus() async {
-    state = const AuthLoading();
-
-    final result = await _getCurrentUserUseCase();
-
-    result.fold(
-      (failure) {
-        debugPrint('[AuthNotifier] Failure recibido, usuario no autenticado: ${failure.message}');
-        state = const AuthUnauthenticated();
-      },
-      (user) {
-        debugPrint('[AuthNotifier] Usuario recibido, usuario autenticado: ${user.email}');
-        state = AuthAuthenticated(user);
-      },
-    );
+    debugPrint('[AuthNotifier] FAKE AUTH: Usuario mockeado automáticamente');
+    state = const AuthAuthenticated(User(
+      id: 'mock-123',
+      email: 'test@mock.com',
+      firstName: 'Thomas',
+      lastName: 'User',
+      role: 'user',
+    ));
   }
 
   Future<void> login(String email, String password) async {
-    state = const AuthLoading();
-
-    final result = await _loginUseCase(email: email, password: password);
-
-    result.fold(
-      (failure) {
-        debugPrint('[AuthNotifier] Login fallido: ${failure.message}');
-        state = AuthError(failure.message);
-      },
-      (user) {
-        debugPrint('[AuthNotifier] Login exitoso: ${user.email}');
-        state = AuthAuthenticated(user);
-      },
-    );
+    debugPrint('[AuthNotifier] FAKE LOGIN: Autenticación exitosa mockeada');
+    state = const AuthAuthenticated(User(
+      id: 'mock-123',
+      email: 'test@mock.com',
+      firstName: 'Mock',
+      lastName: 'User',
+      role: 'user',
+    ));
   }
 
   Future<void> register({

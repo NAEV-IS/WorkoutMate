@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": "mock-123",
+      "email": "test@mock.com",
+      "firstName": "Thomas",
+      "lastName": "User",
+      "role": "user"
+    }
+  ],
+  "workouts": [
+    {
+      "id": "1",
+      "userId": "mock-123",
+      "name": "Rutina de Pecho mockeada",
+      "category": "STRENGTH",
+      "exercises": [],
+      "isPublic": false,
+      "createdAt": "2026-06-04T00:00:00Z",
+      "updatedAt": "2026-06-04T00:00:00Z"
+    }
+  ]
+}
